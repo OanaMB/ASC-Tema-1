@@ -1,0 +1,30 @@
+Nume: Bacaran Oana Maria
+Grupă: 334CB
+
+# Tema 1
+
+### Organizare
+-
+1. Explicație pentru soluția aleasă (nu am avut diacritice pe masina virtuala):
+    Acest program implementeaza un server care raspunde la request-uri, folosindu-se de
+multithreading pentru a executa mai rapid cerintele.
+
+Partea de multithreading, regasita in fisierul task_runner, a fost implementata
+folosind doua clase, ThreadPool si TaskRunner. In clasa ThreadPool pornim thread-urile si initializam obiectele necesare stocarii si manipularii datelor: o coada thread-safe in care sunt adaugate request-urile/job-urile de executat, o lista cu job-urile care sunt in running, un event care este setat atunci cand este apelata functia graceful_shutdown si un lock pentru sincronizare. Un obiect task_runner afla rezultatul unui request extragandu-l din coada de pending, adaugandu-l la joburile in running si executand-ul, apoi rezultatul este salvat intr-un fisier json in directorul results. In threadpool se afla si functia graceful_shutdown care declanseaza un event si adauga "numarul de thread-uri" dummy requests in pending jobs pentru a evita un deadlock si thread-urile sa se inchida cu succes.
+
+Pentru a executa un job am creat in functiile endpoint din fisierul routes.py un tuplu ce contine numele/id-ul job-ului, referinta la o functie din fisierul data_ingestor, ce realizeaza calculele necesare aflarii datelor, si argumentele specifice functiei. Functiile din data_ingestor folosesc biblioteca pandas pentru a extrage date din tabelul .csv si a face operatii precum media aritmetica, gruparea coloanelor etc.
+
+Tema a fost utila deoarece am reusit sa ma familiarizez mai mult cu python, json, flask si pandas, si sa aprofundez conceptele de multithreading in python.
+
+### Implementare
+    Am implementat doar mecanica request-urilor si endpoint-urile. 
+Lipsesc testele de unittesting si fisierul pentru logging. Dificultatile
+intampinate au legatura cu erorile precum timed out, sau deschiderea
+unor fisiere gresit sau cu continut gol. 
+
+### Resurse utilizate
+laboratoarele 2 si 3 pentru threadpool, lock si events
+w3schools - pentru functii de python si thread pool
+stackoverflow - debug
+docs.python - pentru functii si librarii
+
